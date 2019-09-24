@@ -1,0 +1,4 @@
+---
+# handlers file for common
+
+- import_tasks: reboot.host.yml

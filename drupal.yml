@@ -1,0 +1,14 @@
+- hosts: web
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: ansible
+  become: yes
+  tasks:
+
+  roles:
+    - info
+    - apt
+    - deploy
+
+    

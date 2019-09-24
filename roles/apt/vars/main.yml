@@ -1,0 +1,20 @@
+---
+# vars file for apt
+
+# Define APT Package Manager varaibles
+apt:
+
+  # Where to look for GPG keys
+  keyserver: keyserver.ubuntu.com
+
+  # Where do we store our package source list
+  list: /etc/apt/sources.list
+
+  # FQDN to RRU Package Mirror
+  mirror: http://prodvicrepoman.royalroads.ca/ubuntu/
+
+  # GPG Keys that must be installed on a system
+  # that uses our mirrors
+  gpg_keys: [
+    "14AA40EC0831756756D7F66C4F4EA0AAE5267A6C" # Ondrej/PHP
+  ]

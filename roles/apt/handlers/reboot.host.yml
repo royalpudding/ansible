@@ -1,0 +1,7 @@
+---
+# Reboot the target machine
+
+- name: Reboot Host
+  reboot:
+    msg: Rebooting system after package update
+  listen: "Reboot Host"

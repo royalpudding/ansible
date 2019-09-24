@@ -1,0 +1,8 @@
+---
+# tasks file for info
+
+# Using Artisan, configure the Laravel installation
+- name: Test connection
+  ping: 
+  tags:
+   - 

@@ -1,0 +1,73 @@
+---
+# Perform all tasks required to perform Ubuntu Systems Upgrade
+# using APT and a local RRU Mirror
+
+# Change default sources list to point to RRU Mirror
+- name: Change APT sources template to use local RRU Mirror
+  template:
+    src: sources.list.j2
+    dest: "{{ apt.list }}"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - template.apt.source
+    - host.upgrade
+
+# Add GPG keys for all trusted repositories
+# contained in our mirror list
+- name: Add trusted GPG keys
+  apt_key:
+    keyserver: "{{ apt.keyserver }}"
+    id: "{{ item }}"
+  with_items: "{{ apt.gpg_keys }}"
+  tags:
+    - add.gpg.keys
+    - host.upgrade
+
+
+# The local RRU Mirror does not support i386 architecture
+# so we need to purge each system of any of such architectures
+# if they exist
+
+- name: Remove and purge all i386 packages
+  command: apt purge ".*:i386"
+  tags:
+    - remove.i386.packages
+    - host.upgrade
+
+
+- name: Remove i386 architecture using DPKG
+  command: "dpkg --remove-architecture i386"
+  tags:
+    - remove.i386.architecture
+    - host.upgrade
+
+
+# Update the APT cache
+- name: Update APT cache
+  apt:
+    update_cache: yes
+  tags:
+    - update.apt.cache
+    - host.upgrade
+
+# Update all packages to the latest version
+- name: Upgrade all system packages to the latest version
+  apt:
+    upgrade: dist
+    force:  yes
+  tags:
+    - upgrade.apt
+    - host.upgrade
+
+# Reboot the system if required
+- name: Reboot host if reboot-required found in /var/run
+  stat:
+    path: /var/run/reboot-required
+  register: result
+  changed_when: result.stat.exists
+  notify: "Reboot Host"
+  tags:
+    - reboot
+    - host.upgrade
