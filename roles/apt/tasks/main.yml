@@ -25,7 +25,6 @@
     - add.gpg.keys
     - host.upgrade
 
-
 # The local RRU Mirror does not support i386 architecture
 # so we need to purge each system of any of such architectures
 # if they exist
@@ -61,13 +60,19 @@
     - upgrade.apt
     - host.upgrade
 
+#Clean up the system
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+    autoremove: yes
+
 # Reboot the system if required
 - name: Reboot host if reboot-required found in /var/run
   stat:
     path: /var/run/reboot-required
   register: result
   changed_when: result.stat.exists
-  notify: "Reboot Host"
+  notify: "Reboot"
   tags:
     - reboot
     - host.upgrade

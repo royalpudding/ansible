@@ -4,16 +4,13 @@
     max_clients: 200
   remote_user: ansible
   become: yes
-  tasks:
+  pre_tasks:
   handlers:
-  - import_tasks: handler.yml
+    - import_tasks: handler.yml
 
   roles:
-    - info
-    - apt
-    - composer
-    - php
     - apache
+    - git
     
 
-    
+    #

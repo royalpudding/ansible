@@ -1,12 +1,2 @@
 ---
-# tasks file for deploy
-
-# Install Git
-- name: Install Git
-  apt:
-    name: git
-    state: present
-  tags:
-    - install.git
-    - host.install.git
-
+# tasks file for roles/deploy

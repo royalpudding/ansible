@@ -1,0 +1,62 @@
+---
+# Install PHP and all modules
+
+# Purge any existing PHP installations so that we are starting form scratch
+- name: Remove PHP 7.0
+  apt:
+    name: php7.0
+    state: absent
+    purge: yes
+  tags:
+    - remove.php
+    - host.install.php
+    
+- name: Remove PHP 7.1
+  apt:
+    name: php7.1
+    state: absent
+    purge: yes
+  tags:
+    - remove.php
+    - host.install.php
+
+- name: Remove PHP 7.3
+  apt:
+    name: php7.1
+    state: absent
+    purge: yes
+  tags:
+    - remove.php
+    - host.install.php
+
+# Install PHP
+- name: Install PHP 7.2
+  apt:
+    name: php7.2
+    update_cache: no
+    state: present
+  tags:
+    - install.php
+    - host.install.php
+
+# Install required PHP Modules
+- name: Install PHP Modules
+  apt:
+    name: "{{ php.modules }}"
+    update_cache: no
+    state: present
+  tags:
+    - install.php.modules
+    - host.install.php
+
+# Configure PHP by slapping it with a ini file
+- name: Configure PHP File
+  template:
+    src: php.ini.j2
+    dest: "{{ php.ini }}"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - configure.php
+    - host.install.php

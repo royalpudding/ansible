@@ -1,0 +1,19 @@
+# Apache variables
+apache:
+  tld: royalroads.ca
+  admin: rru-ais-it-services-learning-systems-dev
+  user: www-data
+  root: /var/www
+  document_root: /var/www/html
+  inventory: /etc/apache2/sites-available
+  ssl_root: /etc/ssl/rru
+  configuration: 
+    main: /etc/apache2/apache2.conf
+    security: /etc/apache2/conf-available/security.conf
+    ssl: /etc/apache2/conf-available/ss;.conf
+  modules: [
+    "rewrite",
+    "headers",
+    "ssl",
+    "deflate"
+  ]

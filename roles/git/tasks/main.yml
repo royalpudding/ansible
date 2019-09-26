@@ -1,0 +1,47 @@
+---
+# tasks file for roles/git
+
+# Install Git
+- name: Install Git
+  apt:
+    name: git
+    state: present
+  tags:
+    - install.git
+    - host.install.git
+
+- name: Copy git deployment key
+  copy:
+    src: deployment_key
+    dest: /home/ansible/.ssh/id_ecdsa
+    decrypt: yes
+    owner: ansible
+    group: ansible
+    mode: '0600'
+
+- name: Set folder permissions on www
+  file:
+    path: /var/www
+    owner: www-data
+    group: www-data
+    mode: 0775
+
+- name: Ansible check file exists example.
+  stat:
+    path: /var/www/mut
+  register: path_check
+
+- debug:
+    msg: "The file or directory exists"
+  when: path_check.stat.isdir is defined
+
+- name: "Git test"
+  git:
+    repo:  ssh://git@stash.royalroads.ca:7999/ps/maintenanceutilities.git
+    dest: /var/www/mut
+    version: master
+  when: path_check.stat.isdir is not defined
+  become: no
+
+
+   

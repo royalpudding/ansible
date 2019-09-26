@@ -1,0 +1,97 @@
+---
+# Install apache2 Web Server
+
+
+# Install the Apache2 package
+- name: Install Apache2
+  apt:
+    name: apache2
+    state: present
+  tags:
+    - install.apache
+    - host.install.apache
+
+# Enable Modules
+- name: Enable Apache Modules
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items: "{{ apache.modules }}"
+  register: result_apache_modules
+  notify: Reboot 
+  tags:
+      - enable.apache.modules
+      - host.install.apache
+
+# Force apache restart
+# (Configuration file depends on Modules installed in previous steps)
+- name: Force Apache2 Restart
+  service:
+    name: apache2
+    state: restarted
+  tags:
+    - host.install.apache
+
+
+# Configure the main apache2.conf file
+- name: Configure Apache main file
+  template:
+    src: apache2.conf.j2
+    dest: "{{ apache.configuration.main }}"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+      - configure.apache.main
+      - host.install.apache
+
+# Configure Security
+- name: Configure Apache security configuration
+  template:
+    src: security.conf.j2
+    dest: /etc/apache2/conf-available/security.conf
+    owner: root
+    group: root
+  tags:
+      - configure.apache.security
+      - host.install.apache
+
+# Configure SSL
+- name: Configure Apache SSL configuration
+  template:
+    src: ssl.conf.j2
+    dest: /etc/apache2/conf-available/ssl.conf
+    owner: root
+    group: root
+  tags:
+      - configure.apache.security
+      - host.install.apache
+
+# Enable SSL configuration
+- name: Enable SSL Configuration
+  command: a2enconf ssl
+
+# Configure Log Rotate entry for Apache
+- name: Configure Log Rotate for Apache
+  template:
+    src: logrotate.apache2.j2
+    dest: /etc/logrotate.d/apache2
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+      - configure.apache.logrotate
+      - host.install.apache
+
+# Add ansible to the www-data group for deployments
+- name: Add ansible to the www-data group
+  user:
+    name: ansible
+    groups: www-data  
+    append: yes
+  notify: Reset Connection
+
+- name: Flush Handlers
+  meta: flush_handlers
+ 
+  
