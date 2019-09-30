@@ -1,0 +1,33 @@
+---
+- name: v1 Installation debug
+  debug:
+    #msg: "Working with: {{item.name}}"
+    msg: "working with it"
+
+- name: Ansible check file exists example.
+  stat:
+    path: "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
+  register: path_check
+
+- name: "Git deployment"
+  git:
+    repo: "{{item.git.repo}}"
+    dest: "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
+    version: "{{item.git.tag}}"
+    force: yes
+  become: no
+
+- name: Composer Install
+  composer:
+    working_dir: "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
+  become: no
+
+- name: Recursively change ownership of a directory
+  file:
+    path:  "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+
+  

@@ -1,0 +1,42 @@
+---
+# Install and Configure Apache Vhosts
+
+# Copy over VHost Template
+- name: Install Vhost
+  template:
+    src: vhost.conf.j2
+    dest: /etc/apache2/sites-available/{{item.subdomain}}{{tier}}{{item.domain}}.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - template.vhosts
+    - host.configure.vhosts
+
+# Enable the new VHost
+- name: Check if Vhosts installed
+  stat:
+    path: /etc/apache2/sites-available/{{item.subdomain}}{{tier}}{{item.domain}}.conf
+  register: result_vhosts_exists
+
+- name: Enable Vhost
+  command: "a2ensite {{item.subdomain}}{{tier}}{{item.domain}}.conf"
+  when: result_vhosts_exists.stat.exists
+  notify: Restart Webserver
+  tags:
+    - enable.vhosts
+    - host.configure.vhosts
+
+# Disable the default Configuration
+- name: Check if default vhosts file enabled
+  stat:
+    path: /etc/apache2/sites-available/000-default.conf
+  register: result_default_vhosts_exists
+
+
+- name: Disable default VHOST configuration
+  command: a2dissite 000-default.conf
+  when: result_default_vhosts_exists.stat.exists
+  tags:
+    - disable.vhosts
+    - host.configure.vhosts

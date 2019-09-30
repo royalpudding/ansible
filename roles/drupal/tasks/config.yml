@@ -1,0 +1,22 @@
+---
+
+- name: Install Settings File
+  template:
+    src: settings.php.j2
+    dest:  "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}/web/sites/default/settings.php"
+    owner: www-data
+    group: www-data
+    mode: '0444'
+
+    #
+- name: Clear the cache
+  command: vendor/bin/drush cc all
+  args:
+    chdir: "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
+
+    #
+- name: Update DB
+  command: vendor/bin/drush updatedb
+  args:
+    chdir: "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
+

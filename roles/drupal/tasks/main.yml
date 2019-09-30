@@ -1,0 +1,14 @@
+---
+# tasks file for roles/drupal
+
+- name: Messaging
+  debug:
+    msg: This is the drupal role
+
+- include_tasks:  config.yml
+  with_items:
+    - "{{sites}}"
+
+- include_tasks: files.yml
+  with_items:
+    - "{{sites}}"

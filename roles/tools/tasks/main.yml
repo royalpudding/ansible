@@ -1,0 +1,12 @@
+---
+# tasks file for roles/tools
+
+- name: Add zip
+  apt:
+    name: zip
+    state: present
+
+- name: Add MySQL
+  apt:
+    name: mysql-client
+    state: present

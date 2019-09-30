@@ -1,2 +1,18 @@
 ---
 # tasks file for roles/deploy
+
+# Deploy current tag?
+# chown to www-data
+
+
+- name: Messaging
+  debug:
+    msg: This is the end
+
+- include_tasks:  deployment.yml
+  with_items:
+    - "{{sites}}"
+
+- include_tasks:  vhost.yml
+  with_items:
+    - "{{sites}}"

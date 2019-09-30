@@ -26,22 +26,7 @@
     group: www-data
     mode: 0775
 
-- name: Ansible check file exists example.
-  stat:
-    path: /var/www/mut
-  register: path_check
 
-- debug:
-    msg: "The file or directory exists"
-  when: path_check.stat.isdir is defined
-
-- name: "Git test"
-  git:
-    repo:  ssh://git@stash.royalroads.ca:7999/ps/maintenanceutilities.git
-    dest: /var/www/mut
-    version: master
-  when: path_check.stat.isdir is not defined
-  become: no
 
 
    

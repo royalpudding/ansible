@@ -5,15 +5,24 @@
   remote_user: ansible
   become: yes
   tasks:
+  pre_tasks:
+  - name: Include Variables
+    include_vars:
+      dir: sites/school
+      name: sites
   handlers:
   - import_tasks: handler.yml
 
   roles:
     - info
     - apt
+    - tools
+    - git
     - composer
     - php
     - apache
+    - deploy
+    - drupal
     
 
     

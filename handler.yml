@@ -8,3 +8,9 @@
 - name:  Reset Connection
   meta: reset_connection
   ignore_errors: True
+
+- name: Restart Webserver
+  systemd:
+    name: apache2
+    daemon_reload: yes
+    state: restarted

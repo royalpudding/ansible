@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+   ServerName {{item.subdomain}}{{tier}}{{item.domain}}
+   ServerAdmin it@royalroads.ca
+   DocumentRoot /var/www/{{item.subdomain}}{{tier}}{{item.domain}}/web
+   ErrorLog ${APACHE_LOG_DIR}/{{item.subdomain}}{{tier}}{{item.domain}}.error.log
+   CustomLog ${APACHE_LOG_DIR}/{{item.subdomain}}{{tier}}{{item.domain}}.access.log combined
+
+   <Directory /var/www/{{item.subdomain}}{{tier}}{{item.domain}}>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+
+        RewriteEngine on
+        RewriteBase /
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+
+      # RRU - Added to enable server side compression for performance reasons
+      <ifModule mod_deflate.c>
+         AddOutputFilterByType DEFLATE text/html text/plain text/xml
+      </ifmodule>
+
+   </Directory>
+
+</VirtualHost>
+

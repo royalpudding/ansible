@@ -18,20 +18,10 @@
     name: "{{ item }}"
   with_items: "{{ apache.modules }}"
   register: result_apache_modules
-  notify: Reboot 
+  notify: Restart Webserver
   tags:
       - enable.apache.modules
       - host.install.apache
-
-# Force apache restart
-# (Configuration file depends on Modules installed in previous steps)
-- name: Force Apache2 Restart
-  service:
-    name: apache2
-    state: restarted
-  tags:
-    - host.install.apache
-
 
 # Configure the main apache2.conf file
 - name: Configure Apache main file
