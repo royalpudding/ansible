@@ -1,0 +1,12 @@
+---
+- name: Validate Variables
+  debugger: never
+  assert:
+   that:
+      - item.name is defined
+   msg: "{{item.name}} is a name"
+
+- debug:
+    msg: "{{item.name}} is a name"
+
+ 

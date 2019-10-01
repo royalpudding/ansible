@@ -1,0 +1,15 @@
+---
+name: International
+subdomain: international.
+domain: royalroads.ca
+git:
+    repo: ssh://git@stash.royalroads.ca:7999/rdsc/school-of-business.git
+    tag: 1.0
+    branch: master
+vhost:
+    ssl: yes
+drupal:
+    database: dplsb
+    username: drupaladmin
+    password: A1OG7LpR
+    host: devviccorvus.royalroads.ca

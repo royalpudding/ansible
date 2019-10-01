@@ -1,15 +1,15 @@
- sb:   
-    name: School of Business
-    subdomain: sb.
+ shs:   
+    name: School of Humanitarian Studies
+    subdomain: shs.
     domain: royalroads.ca
     git:
-        repo: ssh://git@stash.royalroads.ca:7999/rdsc/school-of-business.git
+        repo: ssh://git@stash.royalroads.ca:7999/rdsc/school-of-humanitarian-studies.git
         tag: 1.0
         branch: master
     vhost:
         ssl: yes
     beta:
-        database: dplsb
+        database: dplshs
         username: drupaladmin
         password: A1OG7LpR
         host: devviccorvus.royalroads.ca

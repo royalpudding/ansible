@@ -1,12 +1,12 @@
 ---
-
 - name: Install Settings File
   template:
-    src: settings.php.j2
+    src: beta.settings.php.j2
     dest:  "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}/web/sites/default/settings.php"
-    owner: www-data
+    owner: ansible
     group: www-data
-    mode: '0444'
+    mode: '0644'
+  when:  inventory_dir is  search ("beta")
 
     #
 - name: Clear the cache
@@ -16,7 +16,7 @@
 
     #
 - name: Update DB
-  command: vendor/bin/drush updatedb
+  command: vendor/bin/drush -y updatedb
   args:
     chdir: "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
 

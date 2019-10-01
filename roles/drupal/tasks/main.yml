@@ -6,9 +6,7 @@
     msg: This is the drupal role
 
 - include_tasks:  config.yml
-  with_items:
-    - "{{sites}}"
+  loop: "{{ sites.values()|list }}"
 
 - include_tasks: files.yml
-  with_items:
-    - "{{sites}}"
+  loop: "{{ sites.values()|list }}"

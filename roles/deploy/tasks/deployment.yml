@@ -27,7 +27,7 @@
     path:  "/var/www/{{item.subdomain}}{{tier}}{{item.domain}}"
     state: directory
     recurse: yes
-    owner: www-data
+    owner: ansible
     group: www-data
 
   

@@ -1,15 +1,15 @@
- sb:   
-    name: School of Business
-    subdomain: sb.
+ ses:   
+    name: School of Environment and Sustainability
+    subdomain: ses.
     domain: royalroads.ca
     git:
-        repo: ssh://git@stash.royalroads.ca:7999/rdsc/school-of-business.git
+        repo: ssh://git@stash.royalroads.ca:7999/rdsc/school-of-environment-and-sustainability.git
         tag: 1.0
         branch: master
     vhost:
         ssl: yes
     beta:
-        database: dplsb
+        database: dplses
         username: drupaladmin
         password: A1OG7LpR
         host: devviccorvus.royalroads.ca
@@ -18,3 +18,4 @@
         username: drupalatest
         password: goats
         host: prod.royalroads.ca
+

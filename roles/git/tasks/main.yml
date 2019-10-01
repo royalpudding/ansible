@@ -10,6 +10,7 @@
     - install.git
     - host.install.git
 
+
 - name: Copy git deployment key
   copy:
     src: deployment_key
@@ -19,10 +20,11 @@
     group: ansible
     mode: '0600'
 
+#This might not belong here
 - name: Set folder permissions on www
   file:
     path: /var/www
-    owner: www-data
+    owner: ansible
     group: www-data
     mode: 0775
 

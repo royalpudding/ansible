@@ -10,9 +10,7 @@
     msg: This is the end
 
 - include_tasks:  deployment.yml
-  with_items:
-    - "{{sites}}"
+  loop: "{{ sites.values()|list }}"
 
 - include_tasks:  vhost.yml
-  with_items:
-    - "{{sites}}"
+  loop: "{{ sites.values()|list }}"

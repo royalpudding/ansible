@@ -1,8 +1,7 @@
 ---
 # tasks file for info
 
-# Using Artisan, configure the Laravel installation
-- name: Test connection
-  ping: 
-  tags:
-   - 
+- include_tasks:  config.yml
+  loop: "{{ sites.values()|list }}"
+
+

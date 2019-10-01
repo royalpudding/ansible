@@ -10,5 +10,5 @@
     path: /var/www/{{item.subdomain}}{{tier}}{{item.domain}}/web/sites/default/files/
     state: directory
     recurse: yes
-    owner: www-data
+    owner: ansible
     group: www-data

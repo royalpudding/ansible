@@ -1,4 +1,4 @@
-- hosts: web
+- hosts: drupal
   vars:
     http_port: 80
     max_clients: 200
@@ -6,10 +6,11 @@
   become: yes
   tasks:
   pre_tasks:
-  - name: Include Variables
+  - name: Include school specific sites
     include_vars:
       dir: sites/school
       name: sites
+    delegate_to: betvicweb2.royalroads.ca
   handlers:
   - import_tasks: handler.yml
 

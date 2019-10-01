@@ -1,21 +1,20 @@
-- hosts: web
+- hosts: drupal
   vars:
     http_port: 80
     max_clients: 200
   remote_user: ansible
   become: yes
+  tasks:
   pre_tasks:
-    - name: Include Variables
-      include_vars:
-        dir: sites/school
-        name: sites
+  - name: Include school specific sites
+    include_vars:
+      dir: sites/school
+      name: sites
+    delegate_to: betvicweb2.royalroads.ca
   handlers:
-    - import_tasks: handler.yml
+  - import_tasks: handler.yml
 
   roles:
-    - deploy
-
+    - info
 
     
-
-    #
